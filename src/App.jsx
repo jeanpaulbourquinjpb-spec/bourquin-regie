@@ -14,19 +14,24 @@ const CATEGORIES = [
 ];
 
 const TYPE_TRAVAIL = [
-  { id: "mo", label: "Main d'oeuvre", icon: "👷" },
-  { id: "mat", label: "Matériel", icon: "📦" },
-  { id: "mo_mat", label: "MO + Matériel", icon: "👷📦" },
+  { id: "mo", label: "Main d'oeuvre" },
+  { id: "mat", label: "Matériel" },
+  { id: "mo_mat", label: "MO + Matériel" },
 ];
 
 const STATUS_COLORS = {
   en_attente: { bg: "rgba(239,68,68,0.15)", border: "rgba(239,68,68,0.4)", text: "#EF4444", label: "En attente" },
-  signe: { bg: "rgba(16,185,129,0.15)", border: "rgba(16,185,129,0.4)", text: "#10B981", label: "Signé" },
-  envoye: { bg: "rgba(59,130,246,0.15)", border: "rgba(59,130,246,0.4)", text: "#3B82F6", label: "Envoyé" },
-  facture: { bg: "rgba(139,92,246,0.15)", border: "rgba(139,92,246,0.4)", text: "#8B5CF6", label: "Facturé" },
+  signe:      { bg: "rgba(16,185,129,0.15)", border: "rgba(16,185,129,0.4)", text: "#10B981", label: "Signé" },
+  envoye:     { bg: "rgba(59,130,246,0.15)", border: "rgba(59,130,246,0.4)", text: "#3B82F6", label: "Envoyé" },
+  facture:    { bg: "rgba(139,92,246,0.15)", border: "rgba(139,92,246,0.4)", text: "#8B5CF6", label: "Facturé" },
 };
 
 const DEFAULT_MONTEURS = ["JP", "AL", "MR", "FB", "PL"];
+
+function safeLocalStorage(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
 
 function formatDate(iso) {
   if (!iso) return "";
@@ -65,27 +70,28 @@ const S = {
   btnGhost: { background: "transparent", color: "#4B5563", border: "1px solid #1E2235", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
   btnDanger: { background: "transparent", color: "#EF4444", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
   fab: { position: "fixed", bottom: 24, right: 20, width: 60, height: 60, background: "linear-gradient(135deg, #F59E0B, #EF4444)", borderRadius: "50%", border: "none", fontSize: 28, cursor: "pointer", color: "#0A0C12", fontWeight: 700, boxShadow: "0 8px 32px rgba(245,158,11,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 },
-  label: { fontSize: 12, color: "#6B7280", marginBottom: 6, display: "block", fontWeight: 600, letterSpacing: 0.3 },
-  labelOpt: { fontSize: 12, color: "#4B5563", marginBottom: 6, display: "block", fontWeight: 500, letterSpacing: 0.3 },
+  label: { fontSize: 12, color: "#6B7280", marginBottom: 6, display: "block", fontWeight: 600 },
+  labelOpt: { fontSize: 12, color: "#4B5563", marginBottom: 6, display: "block", fontWeight: 500 },
   input: { width: "100%", background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: "12px 14px", color: "#E8EAF0", fontSize: 15, outline: "none", boxSizing: "border-box" },
   select: { width: "100%", background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: "12px 14px", color: "#E8EAF0", fontSize: 15, outline: "none", boxSizing: "border-box" },
   fieldGroup: { marginBottom: 16 },
   catGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 },
   catBtn: (active) => ({ background: active ? "rgba(245,158,11,0.12)" : "#0A0C12", border: "1px solid", borderColor: active ? "#F59E0B" : "#1E2235", borderRadius: 10, padding: "12px 10px", color: active ? "#F59E0B" : "#6B7280", fontSize: 12, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }),
   typeBtn: (active) => ({ background: active ? "rgba(59,130,246,0.12)" : "#0A0C12", border: "1px solid", borderColor: active ? "#3B82F6" : "#1E2235", borderRadius: 10, padding: "11px 10px", color: active ? "#3B82F6" : "#6B7280", fontSize: 12, fontWeight: 700, cursor: "pointer", flex: 1, textAlign: "center" }),
-  monteurBtn: (active) => ({ background: active ? "rgba(245,158,11,0.15)" : "#0A0C12", border: "1px solid", borderColor: active ? "#F59E0B" : "#1E2235", borderRadius: 8, padding: "10px 0", color: active ? "#F59E0B" : "#6B7280", fontSize: 13, fontWeight: 800, cursor: "pointer", flex: 1, textAlign: "center" }),
+  monteurBtn: (active) => ({ background: active ? "rgba(245,158,11,0.15)" : "#0A0C12", border: "1px solid", borderColor: active ? "#F59E0B" : "#1E2235", borderRadius: 8, padding: "10px 0", color: active ? "#F59E0B" : "#6B7280", fontSize: 13, fontWeight: 800, cursor: "pointer", flex: 1, textAlign: "center", minWidth: 44 }),
   photoBox: { border: "2px dashed #1E2235", borderRadius: 12, padding: 20, textAlign: "center", cursor: "pointer", background: "#0A0C12" },
-  toast: { position: "fixed", bottom: 100, left: "50%", transform: "translateX(-50%)", background: "#10B981", color: "white", borderRadius: 12, padding: "12px 24px", fontSize: 14, fontWeight: 700, zIndex: 200, boxShadow: "0 4px 20px rgba(16,185,129,0.4)" },
+  toast: { position: "fixed", bottom: 100, left: "50%", transform: "translateX(-50%)", background: "#10B981", color: "white", borderRadius: 12, padding: "12px 24px", fontSize: 14, fontWeight: 700, zIndex: 200 },
   backBtn: { background: "none", border: "none", color: "#6B7280", fontSize: 22, cursor: "pointer", padding: "0 4px" },
   recapBox: { background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 12, padding: 16, fontFamily: "monospace", fontSize: 12, color: "#E8EAF0", whiteSpace: "pre-wrap", lineHeight: 1.8 },
   alertBanner: { background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 12, padding: "12px 14px", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 },
   emptyState: { textAlign: "center", padding: "48px 20px", color: "#4B5563" },
-  signatureCanvas: { width: "100%", height: 160, background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, touchAction: "none", cursor: "crosshair" },
+  signatureCanvas: { width: "100%", height: 160, background: "#fff", border: "1px solid #1E2235", borderRadius: 10, touchAction: "none", cursor: "crosshair" },
   signatureBox: { background: "#13162A", border: "1px solid #1E2235", borderRadius: 12, padding: 14, marginTop: 12 },
   overlay: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 200, display: "flex", alignItems: "flex-end" },
   modal: { background: "#13162A", borderRadius: "20px 20px 0 0", padding: 24, width: "100%", maxWidth: 500, margin: "0 auto" },
 };
 
+// ── Signature canvas component ──────────────────────────────────────────────
 function SignatureCanvas({ onSave, onCancel }) {
   const canvasRef = useRef();
   const drawing = useRef(false);
@@ -96,18 +102,11 @@ function SignatureCanvas({ onSave, onCancel }) {
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     const touch = e.touches ? e.touches[0] : e;
-    return {
-      x: (touch.clientX - rect.left) * scaleX,
-      y: (touch.clientY - rect.top) * scaleY,
-    };
+    return { x: (touch.clientX - rect.left) * scaleX, y: (touch.clientY - rect.top) * scaleY };
   };
 
-  const startDraw = (e) => {
-    e.preventDefault();
-    drawing.current = true;
-    const canvas = canvasRef.current;
-    lastPos.current = getPos(e, canvas);
-  };
+  const startDraw = (e) => { e.preventDefault(); drawing.current = true; lastPos.current = getPos(e, canvasRef.current); };
+  const stopDraw  = (e) => { e?.preventDefault(); drawing.current = false; };
 
   const draw = (e) => {
     e.preventDefault();
@@ -118,49 +117,30 @@ function SignatureCanvas({ onSave, onCancel }) {
     ctx.beginPath();
     ctx.moveTo(lastPos.current.x, lastPos.current.y);
     ctx.lineTo(pos.x, pos.y);
-    ctx.strokeStyle = "#F59E0B";
+    ctx.strokeStyle = "#1a1a1a";
     ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.stroke();
     lastPos.current = pos;
   };
 
-  const stopDraw = (e) => {
-    e?.preventDefault();
-    drawing.current = false;
-  };
-
   const clear = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  };
-
-  const save = () => {
-    const canvas = canvasRef.current;
-    onSave(canvas.toDataURL("image/png"));
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
   };
 
   return (
     <div style={S.overlay}>
       <div style={S.modal}>
         <div style={{ fontSize: 15, fontWeight: 800, color: "#E8EAF0", marginBottom: 4 }}>Signature client</div>
-        <div style={{ fontSize: 12, color: "#4B5563", marginBottom: 14 }}>Le client signe dans le cadre ci-dessous</div>
+        <div style={{ fontSize: 12, color: "#4B5563", marginBottom: 14 }}>Le client signe dans le cadre blanc ci-dessous</div>
         <canvas
-          ref={canvasRef}
-          width={460}
-          height={160}
-          style={S.signatureCanvas}
-          onMouseDown={startDraw}
-          onMouseMove={draw}
-          onMouseUp={stopDraw}
-          onMouseLeave={stopDraw}
-          onTouchStart={startDraw}
-          onTouchMove={draw}
-          onTouchEnd={stopDraw}
+          ref={canvasRef} width={460} height={160} style={S.signatureCanvas}
+          onMouseDown={startDraw} onMouseMove={draw} onMouseUp={stopDraw} onMouseLeave={stopDraw}
+          onTouchStart={startDraw} onTouchMove={draw} onTouchEnd={stopDraw}
         />
         <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-          <button style={{ ...S.btnPrimary, marginTop: 0, flex: 2 }} onClick={save}>✓ Valider la signature</button>
+          <button style={{ ...S.btnPrimary, marginTop: 0, flex: 2 }} onClick={() => onSave(canvasRef.current.toDataURL("image/png"))}>✓ Valider</button>
           <button style={{ ...S.btnGhost, flex: 1 }} onClick={clear}>Effacer</button>
           <button style={{ ...S.btnDanger, flex: 1 }} onClick={onCancel}>Annuler</button>
         </div>
@@ -169,16 +149,16 @@ function SignatureCanvas({ onSave, onCancel }) {
   );
 }
 
+// ── Main app ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [view, setView] = useState("dashboard");
   const [regies, setRegies] = useState([]);
   const [chantiers, setChantiers] = useState([]);
-  const [monteurs, setMonteurs] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("monteurs")) || DEFAULT_MONTEURS; } catch { return DEFAULT_MONTEURS; }
-  });
+  const [monteurs, setMonteurs] = useState(() => safeLocalStorage("monteurs", DEFAULT_MONTEURS));
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [recap, setRecap] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -190,7 +170,7 @@ export default function App() {
   const [form, setForm] = useState({
     chantier_id: "", chantier_nom: "", categorie: "", type_travail: "",
     description: "", heures: "", commentaire: "", initiales: "",
-    date: new Date().toISOString().split("T")[0]
+    date: new Date().toISOString().split("T")[0],
   });
   const fileRef = useRef();
 
@@ -198,21 +178,30 @@ export default function App() {
 
   const loadData = async () => {
     setLoading(true);
-    const [{ data: c }, { data: r }] = await Promise.all([
-      supabase.from("chantiers").select("*").order("created_at", { ascending: false }),
-      supabase.from("regies").select("*").order("created_at", { ascending: false }),
-    ]);
-    setChantiers(c || []);
-    setRegies(r || []);
+    setErrorMsg(null);
+    try {
+      const [{ data: c, error: ce }, { data: r, error: re }] = await Promise.all([
+        supabase.from("chantiers").select("*").order("created_at", { ascending: false }),
+        supabase.from("regies").select("*").order("created_at", { ascending: false }),
+      ]);
+      if (ce || re) throw new Error("Erreur de chargement");
+      setChantiers(c || []);
+      setRegies(r || []);
+    } catch {
+      setErrorMsg("Impossible de charger les données. Vérifie ta connexion.");
+    }
     setLoading(false);
+  };
+
+  const saveMonteurs = (list) => {
+    setMonteurs(list);
+    try { localStorage.setItem("monteurs", JSON.stringify(list)); } catch {}
   };
 
   const addMonteur = () => {
     const initiales = newMonteurInitiales.trim().toUpperCase();
     if (!initiales || monteurs.includes(initiales)) return;
-    const updated = [...monteurs, initiales];
-    setMonteurs(updated);
-    localStorage.setItem("monteurs", JSON.stringify(updated));
+    saveMonteurs([...monteurs, initiales]);
     setForm(f => ({ ...f, initiales }));
     setNewMonteurInitiales("");
     setShowAddMonteur(false);
@@ -220,9 +209,7 @@ export default function App() {
 
   const removeMonteur = (m) => {
     if (DEFAULT_MONTEURS.includes(m)) return;
-    const updated = monteurs.filter(x => x !== m);
-    setMonteurs(updated);
-    localStorage.setItem("monteurs", JSON.stringify(updated));
+    saveMonteurs(monteurs.filter(x => x !== m));
   };
 
   const addChantier = async () => {
@@ -232,12 +219,11 @@ export default function App() {
       numero: newChantier.numero.trim() || null,
       email_technicien: newChantier.email.trim() || null,
     }).select().single();
-    if (!error && data) {
-      setChantiers(prev => [data, ...prev]);
-      setForm(f => ({ ...f, chantier_id: data.id, chantier_nom: data.nom }));
-      setNewChantier({ nom: "", numero: "", email: "" });
-      setShowNewChantier(false);
-    }
+    if (error) { alert("Erreur lors de la création du chantier."); return; }
+    setChantiers(prev => [data, ...prev]);
+    setForm(f => ({ ...f, chantier_id: data.id, chantier_nom: data.nom }));
+    setNewChantier({ nom: "", numero: "", email: "" });
+    setShowNewChantier(false);
   };
 
   const handlePhoto = (e) => {
@@ -247,24 +233,19 @@ export default function App() {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
-  const uploadPhoto = async (file) => {
-    const ext = file.name.split(".").pop();
-    const path = `regies/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("photos-regies").upload(path, file);
-    if (error) return null;
-    const { data } = supabase.storage.from("photos-regies").getPublicUrl(path);
-    return data.publicUrl;
-  };
-
-  const uploadSignature = async (dataUrl) => {
+  const uploadFile = async (file, folder, contentType) => {
     try {
-      const base64 = dataUrl.split(",")[1];
-      const binary = atob(base64);
-      const array = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
-      const blob = new Blob([array], { type: "image/png" });
-      const path = `signatures/${Date.now()}.png`;
-      const { error } = await supabase.storage.from("photos-regies").upload(path, blob, { contentType: "image/png" });
+      let blob = file;
+      if (typeof file === "string") {
+        const base64 = file.split(",")[1];
+        const binary = atob(base64);
+        const array = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) array[i] = binary.charCodeAt(i);
+        blob = new Blob([array], { type: contentType });
+      }
+      const ext = contentType === "image/png" ? "png" : (file.name?.split(".").pop() || "jpg");
+      const path = `${folder}/${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("photos-regies").upload(path, blob, { contentType });
       if (error) return null;
       const { data } = supabase.storage.from("photos-regies").getPublicUrl(path);
       return data.publicUrl;
@@ -273,17 +254,18 @@ export default function App() {
 
   const handleSignature = async (regieId, dataUrl) => {
     setShowSignature(null);
-    const url = await uploadSignature(dataUrl);
-    if (!url) return;
-    await supabase.from("regies").update({ signature_url: url, status: "signe" }).eq("id", regieId);
-    setRegies(prev => prev.map(r => r.id === regieId ? { ...r, signature_url: url, status: "signe" } : r));
+    const url = await uploadFile(dataUrl, "signatures", "image/png");
+    if (!url) { alert("Erreur lors de l'upload de la signature."); return; }
+    const { error } = await supabase.from("regies").update({ signature_url: url, status: "signe" }).eq("id", regieId);
+    if (!error) setRegies(prev => prev.map(r => r.id === regieId ? { ...r, signature_url: url, status: "signe" } : r));
   };
 
   const submitRegie = async () => {
     if (!form.chantier_id || !form.categorie || !form.description || !form.initiales) return;
     setSaving(true);
+    setErrorMsg(null);
     let photo_url = null;
-    if (photo) photo_url = await uploadPhoto(photo);
+    if (photo) photo_url = await uploadFile(photo, "regies", photo.type || "image/jpeg");
     const { data, error } = await supabase.from("regies").insert({
       chantier_id: form.chantier_id,
       chantier_nom: form.chantier_nom,
@@ -291,7 +273,6 @@ export default function App() {
       description: form.description,
       quantite: parseFloat(form.heures) || null,
       unite: "h",
-      montant: null,
       commentaire: form.commentaire || null,
       initiales: form.initiales,
       type_travail: form.type_travail || null,
@@ -301,22 +282,20 @@ export default function App() {
     }).select().single();
     setSaving(false);
     if (error) {
-      alert("Erreur lors de l'enregistrement. Vérifie ta connexion et réessaie.");
+      setErrorMsg("Erreur lors de l'enregistrement. Vérifie ta connexion.");
       return;
     }
-    if (data) {
-      setRegies(prev => [data, ...prev]);
-      setSaved(true);
-      setPhoto(null);
-      setPhotoPreview(null);
-      setForm(f => ({ ...f, categorie: "", type_travail: "", description: "", heures: "", commentaire: "", initiales: "", date: new Date().toISOString().split("T")[0] }));
-      setTimeout(() => setSaved(false), 2500);
-    }
+    setRegies(prev => [data, ...prev]);
+    setSaved(true);
+    setPhoto(null);
+    setPhotoPreview(null);
+    setForm(f => ({ ...f, categorie: "", type_travail: "", description: "", heures: "", commentaire: "", initiales: "", date: new Date().toISOString().split("T")[0] }));
+    setTimeout(() => setSaved(false), 2500);
   };
 
   const updateStatus = async (id, status) => {
-    await supabase.from("regies").update({ status }).eq("id", id);
-    setRegies(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+    const { error } = await supabase.from("regies").update({ status }).eq("id", id);
+    if (!error) setRegies(prev => prev.map(r => r.id === id ? { ...r, status } : r));
   };
 
   const getChantier = (id) => chantiers.find(c => c.id === id);
@@ -331,24 +310,27 @@ export default function App() {
     const text = `RÉCAPITULATIF PLUS VALUES / RÉGIE\nChantier : ${nom}${numero}\nDate : ${formatDate(new Date().toISOString())}\n\n${items.map((r, i) => {
       const cat = CATEGORIES.find(c => c.id === r.categorie);
       const type = TYPE_TRAVAIL.find(t => t.id === r.type_travail);
-      return `${i + 1}. ${cat?.label || r.categorie} [${r.initiales}]\n   Date : ${formatDate(r.created_at)}\n   Description : ${r.description}${r.commentaire ? `\n   Commentaire : ${r.commentaire}` : ""}${r.quantite ? `\n   Heures : ${r.quantite}h` : ""}${type ? `\n   Type : ${type.label}` : ""}${r.signature_url ? `\n   Signature : ✓ Client a signé` : ""}`;
-    }).join("\n\n")}\n\n${"─".repeat(40)}\nTotal régies : ${items.length}\n\nSignature client : ____________________\nDate : ____________________`;
+      return `${i + 1}. ${cat?.label || r.categorie} [${r.initiales}]\n   Date : ${formatDate(r.created_at)}\n   Description : ${r.description}${r.commentaire ? `\n   Commentaire : ${r.commentaire}` : ""}${r.quantite ? `\n   Heures : ${r.quantite}h` : ""}${type ? `\n   Type : ${type.label}` : ""}${r.signature_url ? "\n   Signature client : ✓ Obtenue" : ""}`;
+    }).join("\n\n")}\n\n${"─".repeat(40)}\nNombre de régies : ${items.length}\n\nSignature client : ____________________\nDate : ____________________`;
     setRecap({ chantierId, nom: `${nom}${numero}`, text, items });
     setView("recap");
   };
 
+  // ── Loading ────────────────────────────────────────────────────────────────
   if (loading) return (
     <div style={{ ...S.app, display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
       <div style={{ textAlign: "center" }}>
         <div style={{ fontSize: 44, marginBottom: 12 }}>⚡</div>
-        <div style={{ color: "#F59E0B", fontWeight: 700, fontSize: 15 }}>Chargement...</div>
+        <div style={{ color: "#F59E0B", fontWeight: 700 }}>Chargement...</div>
       </div>
     </div>
   );
 
+  // ── Vue saisie ─────────────────────────────────────────────────────────────
   if (view === "saisie") return (
     <div style={S.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
       <div style={S.header}>
         <button onClick={() => setView("dashboard")} style={S.backBtn}>←</button>
         <div style={{ textAlign: "center" }}>
@@ -359,6 +341,9 @@ export default function App() {
       </div>
       <div style={S.body}>
 
+        {errorMsg && <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "10px 14px", color: "#EF4444", fontSize: 13, marginBottom: 14 }}>{errorMsg}</div>}
+
+        {/* Chantier */}
         <div style={S.fieldGroup}>
           <label style={S.label}>Chantier *</label>
           {!showNewChantier ? (
@@ -375,7 +360,7 @@ export default function App() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <input style={S.input} placeholder="Nom du chantier *" value={newChantier.nom} onChange={e => setNewChantier(f => ({ ...f, nom: e.target.value }))} />
-              <input style={S.input} placeholder="Numéro de chantier (ex: 2024-087)" value={newChantier.numero} onChange={e => setNewChantier(f => ({ ...f, numero: e.target.value }))} />
+              <input style={S.input} placeholder="Numéro (ex: 2024-087)" value={newChantier.numero} onChange={e => setNewChantier(f => ({ ...f, numero: e.target.value }))} />
               <input style={S.input} placeholder="Email technicien responsable" type="email" value={newChantier.email} onChange={e => setNewChantier(f => ({ ...f, email: e.target.value }))} />
               <div style={{ display: "flex", gap: 8 }}>
                 <button style={{ ...S.btnGhost, flex: 1, color: "#10B981", borderColor: "#10B981" }} onClick={addChantier}>Créer</button>
@@ -385,37 +370,27 @@ export default function App() {
           )}
         </div>
 
+        {/* Initiales */}
         <div style={S.fieldGroup}>
           <label style={S.label}>Initiales du monteur *</label>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {monteurs.map(m => (
-              <button key={m} style={{ ...S.monteurBtn(form.initiales === m), minWidth: 44 }} onClick={() => setForm(f => ({ ...f, initiales: m }))}>
-                {m}
-              </button>
+              <button key={m} style={S.monteurBtn(form.initiales === m)} onClick={() => setForm(f => ({ ...f, initiales: m }))}>{m}</button>
             ))}
             {!showAddMonteur ? (
-              <button style={{ ...S.btnGhost, padding: "10px 12px" }} onClick={() => setShowAddMonteur(true)}>+</button>
+              <button style={{ ...S.btnGhost, padding: "10px 14px" }} onClick={() => setShowAddMonteur(true)}>+</button>
             ) : (
-              <div style={{ display: "flex", gap: 6, flex: 1, minWidth: 160 }}>
-                <input
-                  style={{ ...S.input, padding: "10px 12px", flex: 1 }}
-                  placeholder="Ex: ZB"
-                  maxLength={3}
-                  value={newMonteurInitiales}
-                  onChange={e => setNewMonteurInitiales(e.target.value.toUpperCase())}
-                  onKeyDown={e => e.key === "Enter" && addMonteur()}
-                  autoFocus
-                />
+              <div style={{ display: "flex", gap: 6 }}>
+                <input style={{ ...S.input, width: 70, padding: "10px 10px" }} placeholder="Ex: ZB" maxLength={3} value={newMonteurInitiales} onChange={e => setNewMonteurInitiales(e.target.value.toUpperCase())} onKeyDown={e => e.key === "Enter" && addMonteur()} autoFocus />
                 <button style={{ ...S.btnGhost, color: "#10B981", borderColor: "#10B981" }} onClick={addMonteur}>OK</button>
                 <button style={S.btnGhost} onClick={() => { setShowAddMonteur(false); setNewMonteurInitiales(""); }}>✕</button>
               </div>
             )}
           </div>
           {monteurs.filter(m => !DEFAULT_MONTEURS.includes(m)).length > 0 && (
-            <div style={{ fontSize: 11, color: "#4B5563", marginTop: 6 }}>
-              Appuie longuement sur une initiale custom pour la supprimer
+            <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap" }}>
               {monteurs.filter(m => !DEFAULT_MONTEURS.includes(m)).map(m => (
-                <button key={m} onClick={() => removeMonteur(m)} style={{ marginLeft: 6, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#EF4444", borderRadius: 4, padding: "2px 6px", fontSize: 11, cursor: "pointer" }}>
+                <button key={m} onClick={() => removeMonteur(m)} style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#EF4444", borderRadius: 6, padding: "3px 8px", fontSize: 11, cursor: "pointer" }}>
                   {m} ✕
                 </button>
               ))}
@@ -423,6 +398,7 @@ export default function App() {
           )}
         </div>
 
+        {/* Catégorie */}
         <div style={S.fieldGroup}>
           <label style={S.label}>Catégorie *</label>
           <div style={S.catGrid}>
@@ -434,6 +410,13 @@ export default function App() {
           </div>
         </div>
 
+        {/* Description */}
+        <div style={S.fieldGroup}>
+          <label style={S.label}>Description des travaux *</label>
+          <textarea style={{ ...S.input, minHeight: 90, resize: "vertical" }} placeholder="Décris précisément ce qui a été fait en plus..." value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+        </div>
+
+        {/* Type travail (optionnel) */}
         <div style={S.fieldGroup}>
           <label style={S.labelOpt}>Type de travail (optionnel)</label>
           <div style={{ display: "flex", gap: 8 }}>
@@ -443,24 +426,22 @@ export default function App() {
           </div>
         </div>
 
-        <div style={S.fieldGroup}>
-          <label style={S.label}>Description des travaux *</label>
-          <textarea style={{ ...S.input, minHeight: 90, resize: "vertical" }} placeholder="Décris précisément ce qui a été fait en plus..." value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
-        </div>
-
+        {/* Commentaire (optionnel) */}
         <div style={S.fieldGroup}>
           <label style={S.labelOpt}>Commentaire (optionnel)</label>
           <input style={S.input} placeholder="Ex: 2 prises supplémentaires demandées par le client..." value={form.commentaire} onChange={e => setForm(f => ({ ...f, commentaire: e.target.value }))} />
         </div>
 
+        {/* Heures (optionnel) */}
         <div style={S.fieldGroup}>
           <label style={S.labelOpt}>Heures (optionnel)</label>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <input style={{ ...S.input, flex: 1 }} type="number" placeholder="ex: 2.5" value={form.heures} onChange={e => setForm(f => ({ ...f, heures: e.target.value }))} />
-            <span style={{ color: "#6B7280", fontSize: 14, whiteSpace: "nowrap" }}>heures</span>
+            <input style={{ ...S.input, flex: 1 }} type="number" step="0.5" placeholder="ex: 2.5" value={form.heures} onChange={e => setForm(f => ({ ...f, heures: e.target.value }))} />
+            <span style={{ color: "#6B7280", fontSize: 14 }}>heures</span>
           </div>
         </div>
 
+        {/* Photo (optionnel) */}
         <div style={S.fieldGroup}>
           <label style={S.labelOpt}>Photo (optionnel)</label>
           <div style={S.photoBox} onClick={() => fileRef.current.click()}>
@@ -472,6 +453,7 @@ export default function App() {
           <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={handlePhoto} />
         </div>
 
+        {/* Date */}
         <div style={S.fieldGroup}>
           <label style={S.labelOpt}>Date</label>
           <input style={S.input} type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} />
@@ -496,9 +478,10 @@ export default function App() {
     </div>
   );
 
+  // ── Vue recap ──────────────────────────────────────────────────────────────
   if (view === "recap") return (
     <div style={S.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
       <div style={S.header}>
         <button onClick={() => setView("dashboard")} style={S.backBtn}>←</button>
         <div style={{ textAlign: "center" }}>
@@ -510,19 +493,20 @@ export default function App() {
       <div style={S.body}>
         <div style={{ ...S.card, background: "rgba(245,158,11,0.06)", borderColor: "rgba(245,158,11,0.2)", marginBottom: 16 }}>
           <div style={S.kpiLabel}>Régies à valider</div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: "#F59E0B", marginTop: 4 }}>{recap?.items.length} régie{recap?.items.length !== 1 ? "s" : ""}</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#F59E0B", marginTop: 4 }}>{recap?.items.length} régie{recap?.items.length !== 1 ? "s" : ""}</div>
         </div>
 
         {recap?.items.map(r => (
           <div key={r.id} style={{ ...S.card, marginBottom: 8 }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: "#E8EAF0", marginBottom: 6 }}>
               {CATEGORIES.find(c => c.id === r.categorie)?.icon} {r.description}
+              {r.initiales && <span style={{ ...S.initialesBadge, marginLeft: 8 }}>{r.initiales}</span>}
             </div>
             {r.photo_url && <img src={r.photo_url} style={{ width: "100%", borderRadius: 8, maxHeight: 140, objectFit: "cover", marginBottom: 8 }} alt="photo" />}
             {r.signature_url ? (
               <div style={{ ...S.signatureBox, background: "rgba(16,185,129,0.08)", borderColor: "rgba(16,185,129,0.3)" }}>
                 <div style={{ fontSize: 11, color: "#10B981", fontWeight: 700, marginBottom: 6 }}>✓ Signé par le client</div>
-                <img src={r.signature_url} style={{ width: "100%", borderRadius: 6, maxHeight: 80, objectFit: "contain", background: "#0A0C12" }} alt="signature" />
+                <img src={r.signature_url} style={{ width: "100%", borderRadius: 6, maxHeight: 80, objectFit: "contain", background: "#fff" }} alt="signature" />
               </div>
             ) : (
               <button style={{ ...S.btnSecondary, width: "100%", marginTop: 4 }} onClick={() => setShowSignature(r.id)}>
@@ -535,7 +519,7 @@ export default function App() {
         <div style={{ ...S.sectionTitle, marginTop: 16 }}>Document à envoyer</div>
         <div style={S.recapBox}>{recap?.text}</div>
 
-        <button style={{ ...S.btnPrimary, marginTop: 16 }} onClick={() => navigator.clipboard?.writeText(recap?.text)}>
+        <button style={{ ...S.btnPrimary, marginTop: 16 }} onClick={() => { try { navigator.clipboard.writeText(recap?.text); } catch {} }}>
           📋 Copier pour envoyer par mail
         </button>
         <div style={{ marginTop: 10, display: "flex", gap: 8 }}>
@@ -557,12 +541,13 @@ export default function App() {
     </div>
   );
 
+  // ── Dashboard ──────────────────────────────────────────────────────────────
   const totalRegies = regies.filter(r => r.status !== "facture").length;
   const enAttenteCount = regies.filter(r => r.status === "en_attente").length;
 
   return (
     <div style={S.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
       <div style={S.header}>
         <div style={S.logoWrap}>
           <div style={S.logoIcon}>⚡</div>
@@ -575,6 +560,8 @@ export default function App() {
       </div>
 
       <div style={S.body}>
+        {errorMsg && <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "10px 14px", color: "#EF4444", fontSize: 13, marginBottom: 14 }}>{errorMsg}</div>}
+
         <div style={S.kpiGrid}>
           <div style={S.kpiCard(false)}>
             <div style={S.kpiLabel}>Régies actives</div>
@@ -598,7 +585,7 @@ export default function App() {
 
         <div style={S.sectionTitle}>Chantiers</div>
 
-        {chantiers.length === 0 ? (
+        {chantiers.filter(c => regiesByChantier(c.id).length > 0).length === 0 ? (
           <div style={S.emptyState}>
             <div style={{ fontSize: 44, marginBottom: 12 }}>🏗</div>
             <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>Aucun chantier</div>
@@ -638,7 +625,7 @@ export default function App() {
                       {r.signature_url && (
                         <div style={{ ...S.signatureBox, background: "rgba(16,185,129,0.06)", borderColor: "rgba(16,185,129,0.2)", marginBottom: 8 }}>
                           <div style={{ fontSize: 10, color: "#10B981", fontWeight: 700, marginBottom: 4 }}>✓ Signé</div>
-                          <img src={r.signature_url} style={{ width: "100%", maxHeight: 60, objectFit: "contain", background: "#0A0C12", borderRadius: 6 }} alt="signature" />
+                          <img src={r.signature_url} style={{ width: "100%", maxHeight: 60, objectFit: "contain", background: "#fff", borderRadius: 6 }} alt="signature" />
                         </div>
                       )}
                       <div style={S.statusRow}>
