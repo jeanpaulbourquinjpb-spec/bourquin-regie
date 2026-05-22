@@ -1055,7 +1055,6 @@ export default function App() {
 
         {filteredChantiers.length === 0 ? (
           <div style={S.emptyState}>
-            <div style={{ fontSize: 44, marginBottom: 12 }}>{dashTab === "ar
             <div style={{ fontSize: 44, marginBottom: 12 }}>{dashTab === "archives" ? "📦" : "🏗"}</div>
             <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>
               {dashTab === "archives" ? "Aucune archive" : "Aucun chantier"}
