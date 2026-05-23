@@ -41,10 +41,10 @@ const SERVICES_MO = [
 const FOURNISSEURS = ["EM", "OF", "SP", "STOCK", "Autre"];
 
 const STATUS_COLORS = {
-  en_attente: { bg: "rgba(239,68,68,0.15)",  border: "rgba(239,68,68,0.4)",  text: "#EF4444", label: "En attente" },
+  en_attente: { bg: "rgba(229,62,62,0.15)",  border: "rgba(239,68,68,0.4)",  text: "#E53E3E", label: "En attente" },
   signe:      { bg: "rgba(16,185,129,0.15)", border: "rgba(16,185,129,0.4)", text: "#10B981", label: "Signé" },
   envoye:     { bg: "rgba(59,130,246,0.15)", border: "rgba(59,130,246,0.4)", text: "#3B82F6", label: "Envoyé" },
-  facture:    { bg: "rgba(139,92,246,0.15)", border: "rgba(139,92,246,0.4)", text: "#8B5CF6", label: "Facturé" },
+  facture:    { bg: "rgba(102,102,102,0.15)", border: "rgba(139,92,246,0.4)", text: "#666666", label: "Facturé" },
 };
 
 const SORT_OPTIONS = [
@@ -74,78 +74,78 @@ function isCanvasEmpty(canvas) {
 }
 
 const S = {
-  app:        { fontFamily: "'DM Sans', sans-serif", background: "#0A0C12", minHeight: "100vh", color: "#E8EAF0", maxWidth: 500, margin: "0 auto" },
-  header:     { background: "linear-gradient(135deg,#13162A,#0A0C12)", borderBottom: "1px solid #1E2235", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 },
+  app:        { fontFamily: "'DM Sans', sans-serif", background: "#FFFFFF", minHeight: "100vh", color: "#1A1A1A", maxWidth: 500, margin: "0 auto" },
+  header:     { background: "#FFFFFF", borderBottom: "1px solid #E8E8E8", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 },
   logoWrap:   { display: "flex", alignItems: "center", gap: 10 },
   logoIcon:   { width: 38, height: 38, background: "#ffffff", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 },
-  logoTitle:  { fontSize: 13, fontWeight: 800, color: "#E8EAF0" },
-  logoSub:    { fontSize: 10, color: "#4B5563", letterSpacing: 1, textTransform: "uppercase", marginTop: 1 },
+  logoTitle:  { fontSize: 13, fontWeight: 800, color: "#1A1A1A" },
+  logoSub:    { fontSize: 10, color: "#666666", letterSpacing: 1, textTransform: "uppercase", marginTop: 1 },
   body:       { padding: "16px 14px" },
-  card:       { background: "#13162A", border: "1px solid #1E2235", borderRadius: 16, padding: 16, marginBottom: 12 },
-  section:    { background: "#13162A", border: "1px solid #1E2235", borderRadius: 14, padding: 14, marginBottom: 14 },
-  secTitle:   { fontSize: 11, color: "#F59E0B", letterSpacing: 1, textTransform: "uppercase", fontWeight: 800, marginBottom: 12, display: "flex", alignItems: "center", gap: 6 },
+  card:       { background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: 16, padding: 16, marginBottom: 12, boxShadow: "0 1px 4px rgba(0,0,0,0.06)" },
+  section:    { background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: 14, padding: 14, marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.06)" },
+  secTitle:   { fontSize: 11, color: "#FF6633", letterSpacing: 1, textTransform: "uppercase", fontWeight: 800, marginBottom: 12, display: "flex", alignItems: "center", gap: 6 },
   kpiGrid:    { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 },
-  kpiCard:    (a) => ({ background: a ? "rgba(239,68,68,0.08)" : "#13162A", border: "1px solid", borderColor: a ? "rgba(239,68,68,0.3)" : "#1E2235", borderRadius: 14, padding: "14px 16px" }),
-  kpiVal:     (a) => ({ fontSize: 20, fontWeight: 800, color: a ? "#EF4444" : "#F59E0B", marginTop: 4 }),
-  kpiLabel:   { fontSize: 10, color: "#4B5563", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 },
-  dashSec:    { fontSize: 10, color: "#4B5563", letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 700, marginBottom: 10, marginTop: 4 },
-  chCard:     { background: "#13162A", border: "1px solid #1E2235", borderRadius: 16, padding: 16, marginBottom: 10 },
+  kpiCard:    (a) => ({ background: a ? "rgba(229,62,62,0.08)" : "#F8F9FA", border: "1px solid", borderColor: a ? "rgba(239,68,68,0.3)" : "#E8E8E8", borderRadius: 14, padding: "14px 16px" }),
+  kpiVal:     (a) => ({ fontSize: 20, fontWeight: 800, color: a ? "#E53E3E" : "#FF6633", marginTop: 4 }),
+  kpiLabel:   { fontSize: 10, color: "#888888", textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 },
+  dashSec:    { fontSize: 10, color: "#888888", letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 700, marginBottom: 10, marginTop: 4 },
+  chCard:     { background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: 16, padding: 16, marginBottom: 10, boxShadow: "0 1px 4px rgba(0,0,0,0.06)" },
   chHead:     { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 },
-  chName:     { fontSize: 15, fontWeight: 700, color: "#E8EAF0" },
-  chNum:      { fontSize: 11, color: "#F59E0B", fontWeight: 700, marginTop: 2 },
-  chMeta:     { fontSize: 11, color: "#4B5563", marginTop: 2 },
-  regieRow:   { borderTop: "1px solid #1E2235", paddingTop: 10, marginTop: 10 },
+  chName:     { fontSize: 15, fontWeight: 700, color: "#1A1A1A" },
+  chNum:      { fontSize: 11, color: "#FF6633", fontWeight: 700, marginTop: 2 },
+  chMeta:     { fontSize: 11, color: "#888888", marginTop: 2 },
+  regieRow:   { borderTop: "1px solid #E8E8E8", paddingTop: 10, marginTop: 10 },
   regieMeta:  { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 6 },
   badge:      (c) => ({ background: c.bg, border: `1px solid ${c.border}`, color: c.text, borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700 }),
-  initBadge:  { background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)", color: "#F59E0B", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700 },
-  numBadge:   { background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.3)", color: "#A78BFA", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 800 },
+  initBadge:  { background: "rgba(255,102,51,0.15)", border: "1px solid rgba(245,158,11,0.3)", color: "#FF6633", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700 },
+  numBadge:   { background: "rgba(102,102,102,0.15)", border: "1px solid rgba(139,92,246,0.3)", color: "#666666", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 800 },
   photoBadge: { background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)", color: "#3B82F6", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
   sigBadge:   { background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.3)", color: "#10B981", borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
   statusRow:  { display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 },
-  statusBtn:  (a, c) => ({ background: a ? c.bg : "transparent", color: a ? c.text : "#4B5563", border: "1px solid", borderColor: a ? c.border : "#1E2235", borderRadius: 6, padding: "4px 10px", fontSize: 11, cursor: "pointer", fontWeight: 600 }),
+  statusBtn:  (a, c) => ({ background: a ? c.bg : "transparent", color: a ? c.text : "#888888", border: "1px solid", borderColor: a ? c.border : "#E8E8E8", borderRadius: 6, padding: "4px 10px", fontSize: 11, cursor: "pointer", fontWeight: 600 }),
   tabRow:     { display: "flex", gap: 4, marginBottom: 14 },
-  tabBtn:     (a) => ({ background: a ? "#F59E0B" : "transparent", color: a ? "#0A0C12" : "#4B5563", border: "1px solid", borderColor: a ? "#F59E0B" : "#1E2235", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 700, cursor: "pointer" }),
+  tabBtn:     (a) => ({ background: a ? "#FF6633" : "transparent", color: a ? "#FFFFFF" : "#888888", border: "1px solid", borderColor: a ? "#FF6633" : "#E8E8E8", borderRadius: 8, padding: "7px 14px", fontSize: 12, fontWeight: 700, cursor: "pointer" }),
   filterRow:  { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 },
-  filterBtn:  (a) => ({ background: a ? "rgba(245,158,11,0.12)" : "transparent", color: a ? "#F59E0B" : "#4B5563", border: "1px solid", borderColor: a ? "#F59E0B" : "#1E2235", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer" }),
-  searchBox:  { width: "100%", background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: "10px 14px", color: "#E8EAF0", fontSize: 14, outline: "none", boxSizing: "border-box", marginBottom: 10 },
+  filterBtn:  (a) => ({ background: a ? "rgba(255,102,51,0.12)" : "transparent", color: a ? "#FF6633" : "#888888", border: "1px solid", borderColor: a ? "#FF6633" : "#E8E8E8", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer" }),
+  searchBox:  { width: "100%", background: "#F8F9FA", border: "1px solid #E8E8E8", borderRadius: 10, padding: "10px 14px", color: "#1A1A1A", fontSize: 14, outline: "none", boxSizing: "border-box", marginBottom: 10 },
   sortRow:    { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 },
-  sortBtn:    (a) => ({ background: a ? "rgba(59,130,246,0.12)" : "transparent", color: a ? "#3B82F6" : "#4B5563", border: "1px solid", borderColor: a ? "#3B82F6" : "#1E2235", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer" }),
-  btnPrimary:   { background: "linear-gradient(135deg,#F59E0B,#EF4444)", color: "#0A0C12", border: "none", borderRadius: 12, padding: "14px 20px", fontSize: 14, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 10 },
-  btnSecondary: { background: "transparent", color: "#F59E0B", border: "1px solid #F59E0B", borderRadius: 12, padding: "12px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
-  btnGhost:   { background: "transparent", color: "#4B5563", border: "1px solid #1E2235", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
-  btnDanger:  { background: "transparent", color: "#EF4444", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
-  btnAdd:     { background: "rgba(245,158,11,0.08)", color: "#F59E0B", border: "1px dashed rgba(245,158,11,0.4)", borderRadius: 10, padding: "11px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 8 },
-  btnArchive: { background: "rgba(139,92,246,0.1)", color: "#A78BFA", border: "1px solid rgba(139,92,246,0.3)", borderRadius: 8, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontWeight: 600 },
-  btnResign:  { background: "rgba(245,158,11,0.1)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 8, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontWeight: 600, marginTop: 6, width: "100%" },
+  sortBtn:    (a) => ({ background: a ? "rgba(59,130,246,0.12)" : "transparent", color: a ? "#3B82F6" : "#888888", border: "1px solid", borderColor: a ? "#3B82F6" : "#E8E8E8", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer" }),
+  btnPrimary:   { background: "#FF6633", color: "#FFFFFF", border: "none", borderRadius: 12, padding: "14px 20px", fontSize: 14, fontWeight: 800, cursor: "pointer", width: "100%", marginTop: 10 },
+  btnSecondary: { background: "transparent", color: "#FF6633", border: "1px solid #FF6633", borderRadius: 12, padding: "12px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
+  btnGhost:   { background: "transparent", color: "#888888", border: "1px solid #E8E8E8", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
+  btnDanger:  { background: "transparent", color: "#E53E3E", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "9px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600 },
+  btnAdd:     { background: "rgba(255,102,51,0.08)", color: "#FF6633", border: "1px dashed rgba(245,158,11,0.4)", borderRadius: 10, padding: "11px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer", width: "100%", marginTop: 8 },
+  btnArchive: { background: "rgba(139,92,246,0.1)", color: "#666666", border: "1px solid rgba(139,92,246,0.3)", borderRadius: 8, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontWeight: 600 },
+  btnResign:  { background: "rgba(255,102,51,0.1)", color: "#FF6633", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 8, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontWeight: 600, marginTop: 6, width: "100%" },
   btnSend:    { background: "rgba(59,130,246,0.1)", color: "#3B82F6", border: "1px solid rgba(59,130,246,0.3)", borderRadius: 8, padding: "7px 12px", fontSize: 12, cursor: "pointer", fontWeight: 600, marginTop: 6, width: "100%", textDecoration: "none", display: "block", textAlign: "center" },
-  btnSendDisabled: { background: "rgba(30,34,53,0.5)", color: "#4B5563", border: "1px solid #1E2235", borderRadius: 8, padding: "7px 12px", fontSize: 12, fontWeight: 600, marginTop: 6, width: "100%", textAlign: "center", cursor: "not-allowed" },
-  fab:        { position: "fixed", bottom: 24, right: 20, width: 60, height: 60, background: "linear-gradient(135deg,#F59E0B,#EF4444)", borderRadius: "50%", border: "none", fontSize: 28, cursor: "pointer", color: "#0A0C12", fontWeight: 700, boxShadow: "0 8px 32px rgba(245,158,11,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 },
-  label:      { fontSize: 12, color: "#6B7280", marginBottom: 6, display: "block", fontWeight: 600 },
-  labelOpt:   { fontSize: 12, color: "#4B5563", marginBottom: 6, display: "block", fontWeight: 500 },
-  input:      { width: "100%", background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: "12px 14px", color: "#E8EAF0", fontSize: 14, outline: "none", boxSizing: "border-box" },
-  select:     { width: "100%", background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: "12px 14px", color: "#E8EAF0", fontSize: 14, outline: "none", boxSizing: "border-box" },
-  catBtn:     (a) => ({ background: a ? "rgba(245,158,11,0.12)" : "#0A0C12", border: "1px solid", borderColor: a ? "#F59E0B" : "#1E2235", borderRadius: 10, padding: "10px", color: a ? "#F59E0B" : "#6B7280", fontSize: 12, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }),
-  montBtn:    (a) => ({ background: a ? "rgba(245,158,11,0.15)" : "#0A0C12", border: "1px solid", borderColor: a ? "#F59E0B" : "#1E2235", borderRadius: 8, padding: "10px 0", color: a ? "#F59E0B" : "#6B7280", fontSize: 13, fontWeight: 800, cursor: "pointer", flex: 1, textAlign: "center", minWidth: 44 }),
-  techBtn:    (a) => ({ background: a ? "rgba(59,130,246,0.15)" : "#0A0C12", border: "1px solid", borderColor: a ? "#3B82F6" : "#1E2235", borderRadius: 8, padding: "10px 14px", color: a ? "#3B82F6" : "#6B7280", fontSize: 13, fontWeight: 800, cursor: "pointer" }),
-  photoBox:   { border: "2px dashed #1E2235", borderRadius: 12, padding: 20, textAlign: "center", cursor: "pointer", background: "#0A0C12" },
+  btnSendDisabled: { background: "rgba(30,34,53,0.5)", color: "#888888", border: "1px solid #E8E8E8", borderRadius: 8, padding: "7px 12px", fontSize: 12, fontWeight: 600, marginTop: 6, width: "100%", textAlign: "center", cursor: "not-allowed" },
+  fab:        { position: "fixed", bottom: 24, right: 20, width: 60, height: 60, background: "#FF6633", borderRadius: "50%", border: "none", fontSize: 28, cursor: "pointer", color: "#FFFFFF", fontWeight: 700, boxShadow: "0 4px 20px rgba(255,102,51,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100 },
+  label:      { fontSize: 12, color: "#666666", marginBottom: 6, display: "block", fontWeight: 600 },
+  labelOpt:   { fontSize: 12, color: "#888888", marginBottom: 6, display: "block", fontWeight: 500 },
+  input:      { width: "100%", background: "#FFFFFF", border: "1px solid #E8E8E8", borderRadius: 10, padding: "12px 14px", color: "#1A1A1A", fontSize: 14, outline: "none", boxSizing: "border-box" },
+  select:     { width: "100%", background: "#F8F9FA", border: "1px solid #E8E8E8", borderRadius: 10, padding: "12px 14px", color: "#1A1A1A", fontSize: 14, outline: "none", boxSizing: "border-box" },
+  catBtn:     (a) => ({ background: a ? "rgba(255,102,51,0.12)" : "#FFFFFF", border: "1px solid", borderColor: a ? "#FF6633" : "#E8E8E8", borderRadius: 10, padding: "10px", color: a ? "#FF6633" : "#666666", fontSize: 12, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }),
+  montBtn:    (a) => ({ background: a ? "rgba(255,102,51,0.15)" : "#FFFFFF", border: "1px solid", borderColor: a ? "#FF6633" : "#E8E8E8", borderRadius: 8, padding: "10px 0", color: a ? "#FF6633" : "#666666", fontSize: 13, fontWeight: 800, cursor: "pointer", flex: 1, textAlign: "center", minWidth: 44 }),
+  techBtn:    (a) => ({ background: a ? "rgba(59,130,246,0.15)" : "#FFFFFF", border: "1px solid", borderColor: a ? "#3B82F6" : "#E8E8E8", borderRadius: 8, padding: "10px 14px", color: a ? "#3B82F6" : "#666666", fontSize: 13, fontWeight: 800, cursor: "pointer" }),
+  photoBox:   { border: "2px dashed #E8E8E8", borderRadius: 12, padding: 20, textAlign: "center", cursor: "pointer", background: "#FFFFFF" },
   toast:      { position: "fixed", bottom: 100, left: "50%", transform: "translateX(-50%)", borderRadius: 12, padding: "12px 24px", fontSize: 14, fontWeight: 700, zIndex: 200, whiteSpace: "nowrap" },
   toastGreen: { background: "#10B981", color: "white" },
-  toastOrange:{ background: "#F59E0B", color: "#0A0C12" },
-  toastRed:   { background: "#EF4444", color: "white" },
-  backBtn:    { background: "none", border: "none", color: "#6B7280", fontSize: 22, cursor: "pointer", padding: "0 4px" },
-  recapBox:   { background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 12, padding: 16, fontFamily: "monospace", fontSize: 12, color: "#E8EAF0", whiteSpace: "pre-wrap", lineHeight: 1.8 },
-  alertBan:   { background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 12, padding: "12px 14px", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 },
-  emptyState: { textAlign: "center", padding: "48px 20px", color: "#4B5563" },
+  toastOrange:{ background: "#FF6633", color: "#FFFFFF" },
+  toastRed:   { background: "#E53E3E", color: "white" },
+  backBtn:    { background: "none", border: "none", color: "#666666", fontSize: 22, cursor: "pointer", padding: "0 4px" },
+  recapBox:   { background: "#F8F9FA", border: "1px solid #E8E8E8", borderRadius: 12, padding: 16, fontFamily: "monospace", fontSize: 12, color: "#1A1A1A", whiteSpace: "pre-wrap", lineHeight: 1.8 },
+  alertBan:   { background: "rgba(229,62,62,0.08)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 12, padding: "12px 14px", marginBottom: 12, display: "flex", alignItems: "center", gap: 10 },
+  emptyState: { textAlign: "center", padding: "48px 20px", color: "#888888" },
   sigCanvas:  { width: "100%", background: "#fff", border: "2px solid #d1d5db", borderRadius: 10, touchAction: "none", cursor: "crosshair", display: "block" },
-  sigBox:     { background: "#13162A", border: "1px solid #1E2235", borderRadius: 12, padding: 14, marginTop: 8 },
-  overlay:    { position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 },
-  overlayBot: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 200, display: "flex", alignItems: "flex-end" },
-  modal:      { background: "#13162A", borderRadius: "20px 20px 0 0", padding: 24, width: "100%", maxWidth: 500, margin: "0 auto" },
+  sigBox:     { background: "#F8F9FA", border: "1px solid #E8E8E8", borderRadius: 12, padding: 14, marginTop: 8 },
+  overlay:    { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 },
+  overlayBot: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 200, display: "flex", alignItems: "flex-end" },
+  modal:      { background: "#F8F9FA", borderRadius: "20px 20px 0 0", padding: 24, width: "100%", maxWidth: 500, margin: "0 auto" },
   rowLine:    { display: "flex", gap: 6, alignItems: "flex-start", marginBottom: 8 },
-  delSmall:   { background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#EF4444", borderRadius: 6, padding: "8px 10px", fontSize: 13, cursor: "pointer", flexShrink: 0 },
-  errBox:     { background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "10px 14px", color: "#EF4444", fontSize: 13, marginBottom: 14 },
+  delSmall:   { background: "rgba(229,62,62,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#E53E3E", borderRadius: 6, padding: "8px 10px", fontSize: 13, cursor: "pointer", flexShrink: 0 },
+  errBox:     { background: "rgba(229,62,62,0.1)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "10px 14px", color: "#E53E3E", fontSize: 13, marginBottom: 14 },
   fullImg:    { maxWidth: "100%", maxHeight: "90vh", borderRadius: 12, objectFit: "contain" },
-  loadingOverlay: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 },
+  loadingOverlay: { position: "fixed", inset: 0, background: "rgba(255,255,255,0.85)", zIndex: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 },
 };
 
 async function generateComposite(sigDataUrl, regie, chantier) {
@@ -177,10 +177,10 @@ async function generateComposite(sigDataUrl, regie, chantier) {
       const ctx = cv.getContext("2d");
       ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, H);
       ctx.strokeStyle = "#e5e7eb"; ctx.lineWidth = 1; ctx.strokeRect(15, 15, W-30, H-30);
-      ctx.fillStyle = "#13162A"; ctx.fillRect(15, 15, W-30, 56);
+      ctx.fillStyle = "#F8F9FA"; ctx.fillRect(15, 15, W-30, 56);
       const logoImg = new Image(); logoImg.crossOrigin = "anonymous";
-      logoImg.onload = () => { ctx.drawImage(logoImg, PAD, 18, 24, 24); ctx.fillStyle = "#F59E0B"; ctx.font = "bold 18px Arial"; ctx.fillText(APP_NAME, PAD + 32, 50); continueCanvas(); };
-      logoImg.onerror = () => { ctx.fillStyle = "#F59E0B"; ctx.font = "bold 18px Arial"; ctx.fillText("⚡ " + APP_NAME, PAD, 50); continueCanvas(); };
+      logoImg.onload = () => { ctx.drawImage(logoImg, PAD, 18, 24, 24); ctx.fillStyle = "#FF6633"; ctx.font = "bold 18px Arial"; ctx.fillText(APP_NAME, PAD + 32, 50); continueCanvas(); };
+      logoImg.onerror = () => { ctx.fillStyle = "#FF6633"; ctx.font = "bold 18px Arial"; ctx.fillText("⚡ " + APP_NAME, PAD, 50); continueCanvas(); };
       logoImg.src = LOGO_URL;
       function continueCanvas() {
       ctx.fillStyle = "#9ca3af"; ctx.font = "12px Arial"; ctx.fillText("Bon de régie — Plus values", W-280, 50);
@@ -246,18 +246,18 @@ function SignatureCanvas({ regie, chantier, onSave, onCancel }) {
   return (
     <div style={S.overlayBot}>
       <div style={{ ...S.modal, paddingBottom: 32 }}>
-        <div style={{ fontSize: 14, fontWeight: 800, color: "#E8EAF0", marginBottom: 4 }}>Signature client</div>
-        <div style={{ fontSize: 11, color: "#4B5563", marginBottom: 12 }}>Le client lit les travaux et signe ci-dessous</div>
-        <div style={{ background: "#0A0C12", borderRadius: 10, padding: 12, marginBottom: 12, maxHeight: 180, overflowY: "auto" }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: "#F59E0B", marginBottom: 4 }}>{chantier?.nom}{chantier?.numero ? ` — N° ${chantier.numero}` : ""}</div>
-          <div style={{ fontSize: 11, color: "#9CA3AF", marginBottom: 4 }}>Régie #{regie?.regie_number} · {regie?.categorie} · {regie?.initiales} · {formatDate(regie?.created_at)}</div>
-          {regie?.emplacement && <div style={{ fontSize: 11, color: "#6B7280", marginBottom: 4 }}>📍 {regie.emplacement}</div>}
-          {regie?.demandeur   && <div style={{ fontSize: 11, color: "#6B7280", marginBottom: 4 }}>🙋 {regie.demandeur}</div>}
-          {(lignes.mo || []).map((l, i) => { const sv = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 11, color: "#9CA3AF" }}>👷 {sv?.label || l.service}{l.quantite ? ` : ${l.quantite} ${sv?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
-          {(lignes.mat || []).filter(l => l.designation).map((l, i) => <div key={i} style={{ fontSize: 11, color: "#9CA3AF" }}>📦 {l.designation}{l.quantite ? ` · Qté: ${l.quantite}` : ""}</div>)}
+        <div style={{ fontSize: 14, fontWeight: 800, color: "#1A1A1A", marginBottom: 4 }}>Signature client</div>
+        <div style={{ fontSize: 11, color: "#888888", marginBottom: 12 }}>Le client lit les travaux et signe ci-dessous</div>
+        <div style={{ background: "#FFFFFF", borderRadius: 10, padding: 12, marginBottom: 12, maxHeight: 180, overflowY: "auto" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#FF6633", marginBottom: 4 }}>{chantier?.nom}{chantier?.numero ? ` — N° ${chantier.numero}` : ""}</div>
+          <div style={{ fontSize: 11, color: "#666666", marginBottom: 4 }}>Régie #{regie?.regie_number} · {regie?.categorie} · {regie?.initiales} · {formatDate(regie?.created_at)}</div>
+          {regie?.emplacement && <div style={{ fontSize: 11, color: "#666666", marginBottom: 4 }}>📍 {regie.emplacement}</div>}
+          {regie?.demandeur   && <div style={{ fontSize: 11, color: "#666666", marginBottom: 4 }}>🙋 {regie.demandeur}</div>}
+          {(lignes.mo || []).map((l, i) => { const sv = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 11, color: "#666666" }}>👷 {sv?.label || l.service}{l.quantite ? ` : ${l.quantite} ${sv?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
+          {(lignes.mat || []).filter(l => l.designation).map((l, i) => <div key={i} style={{ fontSize: 11, color: "#666666" }}>📦 {l.designation}{l.quantite ? ` · Qté: ${l.quantite}` : ""}</div>)}
         </div>
         {sigErr && <div style={{ ...S.errBox, marginBottom: 8 }}>⚠️ Le client doit signer avant de valider.</div>}
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#E8EAF0", marginBottom: 6 }}>Signer ci-dessous :</div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: "#1A1A1A", marginBottom: 6 }}>Signer ci-dessous :</div>
         <canvas ref={ref} style={{ ...S.sigCanvas, height: 130 }}
           onMouseDown={start} onMouseMove={draw} onMouseUp={stop} onMouseLeave={stop}
           onTouchStart={start} onTouchMove={draw} onTouchEnd={stop} />
@@ -285,8 +285,8 @@ function FullscreenViewer({ url, onClose }) {
 function LoadingOverlay({ message }) {
   return (
     <div style={S.loadingOverlay}>
-      <div style={{ width: 48, height: 48, border: "4px solid rgba(245,158,11,0.3)", borderTop: "4px solid #F59E0B", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
-      <div style={{ color: "#F59E0B", fontWeight: 700, fontSize: 15 }}>{message}</div>
+      <div style={{ width: 48, height: 48, border: "4px solid rgba(255,102,51,0.3)", borderTop: "4px solid #FF6633", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
+      <div style={{ color: "#FF6633", fontWeight: 700, fontSize: 15 }}>{message}</div>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
@@ -566,7 +566,7 @@ export default function App() {
   if (isLoading) return (
     <div style={{ ...S.app, display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      <div style={{ textAlign: "center" }}><img src={LOGO_URL} style={{ width: 60, height: 60, objectFit: "contain", marginBottom: 12 }} alt="logo" /><div style={{ color: "#F59E0B", fontWeight: 700 }}>Chargement...</div></div>
+      <div style={{ textAlign: "center" }}><img src={LOGO_URL} style={{ width: 60, height: 60, objectFit: "contain", marginBottom: 12 }} alt="logo" /><div style={{ color: "#FF6633", fontWeight: 700 }}>Chargement...</div></div>
     </div>
   );
 
@@ -624,9 +624,9 @@ export default function App() {
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <input style={{ ...S.input, borderRadius: "10px 0 0 10px", flex: 1 }} placeholder="nom" value={newCh.techCustom} onChange={e => setNewCh(f => ({ ...f, techCustom: e.target.value }))} />
-              <div style={{ background: "#1E2235", border: "1px solid #1E2235", borderLeft: "none", borderRadius: "0 10px 10px 0", padding: "12px 10px", fontSize: 12, color: "#4B5563", whiteSpace: "nowrap" }}>@bourquinelectricite.ch</div>
+              <div style={{ background: "#E8E8E8", border: "1px solid #E8E8E8", borderLeft: "none", borderRadius: "0 10px 10px 0", padding: "12px 10px", fontSize: 12, color: "#888888", whiteSpace: "nowrap" }}>@bourquinelectricite.ch</div>
             </div>
-            {form.chantier_email_tech && <div style={{ fontSize: 11, color: "#4B5563", marginTop: 6 }}>→ {form.chantier_email_tech}</div>}
+            {form.chantier_email_tech && <div style={{ fontSize: 11, color: "#888888", marginTop: 6 }}>→ {form.chantier_email_tech}</div>}
           </div>
           <div style={S.section}>
             <div style={S.secTitle}>👷 Monteur *</div>
@@ -645,7 +645,7 @@ export default function App() {
             {monteurs.filter(m => !DEFAULT_MONTEURS.includes(m)).length > 0 && (
               <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap" }}>
                 {monteurs.filter(m => !DEFAULT_MONTEURS.includes(m)).map(m => (
-                  <button key={m} onClick={() => removeMonteur(m)} style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#EF4444", borderRadius: 6, padding: "3px 8px", fontSize: 11, cursor: "pointer" }}>{m} ✕</button>
+                  <button key={m} onClick={() => removeMonteur(m)} style={{ background: "rgba(229,62,62,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#E53E3E", borderRadius: 6, padding: "3px 8px", fontSize: 11, cursor: "pointer" }}>{m} ✕</button>
                 ))}
               </div>
             )}
@@ -655,7 +655,7 @@ export default function App() {
             <input style={S.input} placeholder="Nom (ex: Marc Dupont, architecte)" value={form.demandeur} onChange={e => setForm(f => ({ ...f, demandeur: e.target.value }))} />
           </div>
           <div style={S.section}>
-            <div style={S.secTitle}>🏷 Catégorie(s) * <span style={{ fontSize: 10, color: "#4B5563", fontWeight: 400 }}>Sélection multiple</span></div>
+            <div style={S.secTitle}>🏷 Catégorie(s) * <span style={{ fontSize: 10, color: "#888888", fontWeight: 400 }}>Sélection multiple</span></div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
               {CATEGORIES.map(cat => (
                 <button key={cat.id} style={S.catBtn(form.categories.includes(cat.id))} onClick={() => toggleCat(cat.id)}>
@@ -687,7 +687,7 @@ export default function App() {
                     <input style={S.input} type="number" step="0.5" placeholder="0" value={l.quantite} onChange={e => updateMO(l.id, "quantite", e.target.value)} />
                   </div>
                   <div style={{ width: 36, paddingTop: idx === 0 ? 26 : 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontSize: 12, color: "#4B5563", fontWeight: 700 }}>{svc?.unite?.toUpperCase() || "H"}</span>
+                    <span style={{ fontSize: 12, color: "#888888", fontWeight: 700 }}>{svc?.unite?.toUpperCase() || "H"}</span>
                   </div>
                   {form.lignes_mo.length > 1 && <button style={{ ...S.delSmall, marginTop: idx === 0 ? 22 : 0 }} onClick={() => removeMO(l.id)}>✕</button>}
                 </div>
@@ -705,9 +705,9 @@ export default function App() {
             {form.has_materiel && (
               <>
                 {form.lignes_mat.map((l, idx) => (
-                  <div key={l.id} style={{ background: "#0A0C12", border: "1px solid #1E2235", borderRadius: 10, padding: 10, marginBottom: 8 }}>
+                  <div key={l.id} style={{ background: "#F8F9FA", border: "1px solid #E8E8E8", borderRadius: 10, padding: 10, marginBottom: 8 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                      <span style={{ fontSize: 10, color: "#4B5563", fontWeight: 700, textTransform: "uppercase" }}>Ligne {idx+1}</span>
+                      <span style={{ fontSize: 10, color: "#888888", fontWeight: 700, textTransform: "uppercase" }}>Ligne {idx+1}</span>
                       {form.lignes_mat.length > 1 && <button style={S.delSmall} onClick={() => removeMat(l.id)}>✕</button>}
                     </div>
                     <div style={{ marginBottom: 8 }}><label style={S.labelOpt}>Désignation</label><input style={S.input} placeholder="Matériel, appareillage..." value={l.designation} onChange={e => updateMat(l.id, "designation", e.target.value)} /></div>
@@ -732,14 +732,14 @@ export default function App() {
           <div style={S.section}>
             <div style={S.secTitle}>📷 Photo</div>
             <div style={S.photoBox} onClick={() => fileRef.current.click()}>
-              {photoPreview ? <img src={photoPreview} style={{ width: "100%", borderRadius: 10, maxHeight: 220, objectFit: "cover" }} alt="preview" /> : <div><div style={{ fontSize: 32, marginBottom: 6 }}>📷</div><div style={{ fontSize: 13, color: "#4B5563" }}>Prendre une photo comme preuve</div></div>}
+              {photoPreview ? <img src={photoPreview} style={{ width: "100%", borderRadius: 10, maxHeight: 220, objectFit: "cover" }} alt="preview" /> : <div><div style={{ fontSize: 32, marginBottom: 6 }}>📷</div><div style={{ fontSize: 13, color: "#888888" }}>Prendre une photo comme preuve</div></div>}
             </div>
             <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={handlePhoto} />
           </div>
           <button style={{ ...S.btnPrimary, opacity: (!canSubmit || saving) ? 0.4 : 1 }} onClick={submitRegie} disabled={!canSubmit || saving}>
             {saving ? "Enregistrement..." : "✓ Enregistrer la régie"}
           </button>
-          {!canSubmit && <div style={{ textAlign: "center", fontSize: 12, color: "#4B5563", marginTop: 8 }}>Obligatoire : date, chantier, monteur, demandeur, emplacement, catégorie + au moins un service MO</div>}
+          {!canSubmit && <div style={{ textAlign: "center", fontSize: 12, color: "#888888", marginTop: 8 }}>Obligatoire : date, chantier, monteur, demandeur, emplacement, catégorie + au moins un service MO</div>}
           <div style={{ height: 40 }} />
         </div>
         {saved === "success" && <div style={{ ...S.toast, ...S.toastGreen }}>✓ Régie enregistrée !</div>}
@@ -756,9 +756,9 @@ export default function App() {
         <div style={{ width: 36 }} />
       </div>
       <div style={S.body}>
-        <div style={{ ...S.card, background: "rgba(245,158,11,0.06)", borderColor: "rgba(245,158,11,0.2)", marginBottom: 16 }}>
+        <div style={{ ...S.card, background: "rgba(255,102,51,0.06)", borderColor: "rgba(255,102,51,0.2)", marginBottom: 16 }}>
           <div style={S.kpiLabel}>Régies du chantier</div>
-          <div style={{ fontSize: 22, fontWeight: 800, color: "#F59E0B", marginTop: 4 }}>{recap?.items.length} régie{recap?.items.length !== 1 ? "s" : ""}</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: "#FF6633", marginTop: 4 }}>{recap?.items.length} régie{recap?.items.length !== 1 ? "s" : ""}</div>
         </div>
         {recap?.items.map((r, idx) => {
           const lignes = parseLignes(r.lignes); const ch = recap.ch;
@@ -766,18 +766,18 @@ export default function App() {
           return (
             <div key={r.id} style={{ ...S.card, marginBottom: 8 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#E8EAF0" }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#1A1A1A" }}>
                   Régie #{r.regie_number || idx+1}
                   {r.initiales && <span style={{ ...S.initBadge, marginLeft: 8 }}>{r.initiales}</span>}
                   {r.photo_url && <span style={{ ...S.photoBadge, marginLeft: 6 }} onClick={() => setFullscreenUrl(r.photo_url)}>📷</span>}
                 </div>
-                <span style={{ fontSize: 11, color: "#4B5563" }}>{formatDate(r.created_at)}</span>
+                <span style={{ fontSize: 11, color: "#888888" }}>{formatDate(r.created_at)}</span>
               </div>
-              <div style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 4 }}>{r.categorie}{r.emplacement ? ` · 📍 ${r.emplacement}` : ""}</div>
-              {r.demandeur && <div style={{ fontSize: 11, color: "#6B7280", marginBottom: 6 }}>🙋 {r.demandeur}</div>}
+              <div style={{ fontSize: 12, color: "#666666", marginBottom: 4 }}>{r.categorie}{r.emplacement ? ` · 📍 ${r.emplacement}` : ""}</div>
+              {r.demandeur && <div style={{ fontSize: 11, color: "#666666", marginBottom: 6 }}>🙋 {r.demandeur}</div>}
               {r.photo_url && <img src={r.photo_url} onClick={() => setFullscreenUrl(r.photo_url)} style={{ width: "100%", borderRadius: 8, maxHeight: 160, objectFit: "cover", marginBottom: 8, cursor: "pointer" }} alt="photo" />}
-              {(lignes.mo || []).map((l, i) => { const s = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 12, color: "#9CA3AF", padding: "2px 0" }}>👷 {s?.label || l.service}{l.quantite ? ` : ${l.quantite} ${s?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
-              {(lignes.mat || []).filter(l => l.designation).map((l, i) => <div key={i} style={{ fontSize: 12, color: "#9CA3AF", padding: "2px 0" }}>📦 {l.designation}{l.quantite ? ` · ${l.quantite}` : ""}</div>)}
+              {(lignes.mo || []).map((l, i) => { const s = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 12, color: "#666666", padding: "2px 0" }}>👷 {s?.label || l.service}{l.quantite ? ` : ${l.quantite} ${s?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
+              {(lignes.mat || []).filter(l => l.designation).map((l, i) => <div key={i} style={{ fontSize: 12, color: "#666666", padding: "2px 0" }}>📦 {l.designation}{l.quantite ? ` · ${l.quantite}` : ""}</div>)}
               {r.signature_url ? (
                 <div style={{ ...S.sigBox, background: "rgba(16,185,129,0.08)", borderColor: "rgba(16,185,129,0.3)", marginTop: 8 }}>
                   <div style={{ fontSize: 11, color: "#10B981", fontWeight: 700, marginBottom: 6 }}>✓ Signé par le client</div>
@@ -797,7 +797,7 @@ export default function App() {
         })}
         <div style={{ ...S.dashSec, marginTop: 16 }}>Récapitulatif complet (vue interne)</div>
         <div style={S.recapBox}>{recap?.text}</div>
-        <button style={{ ...S.btnPrimary, marginTop: 12, background: "#1E2235", color: "#9CA3AF", border: "none" }} onClick={() => { try { navigator.clipboard.writeText(recap?.text); } catch {} }}>📋 Copier le récapitulatif</button>
+        <button style={{ ...S.btnPrimary, marginTop: 12, background: "#E8E8E8", color: "#666666", border: "none" }} onClick={() => { try { navigator.clipboard.writeText(recap?.text); } catch {} }}>📋 Copier le récapitulatif</button>
         <div style={{ marginTop: 10, display: "flex", gap: 8 }}>
           <button style={{ ...S.btnSecondary, flex: 1 }} onClick={() => { recap?.items.forEach(r => updateStatus(r.id, "envoye")); setView("dashboard"); }}>Tout marquer envoyé</button>
           <button style={{ ...S.btnGhost, flex: 1 }} onClick={() => { recap?.items.forEach(r => updateStatus(r.id, "facture")); setView("dashboard"); }}>✓ Tout facturé</button>
@@ -827,7 +827,7 @@ export default function App() {
         {enAttenteCount > 0 && (
           <div style={S.alertBan}>
             <span style={{ fontSize: 20 }}>⚠️</span>
-            <div><div style={{ fontSize: 13, fontWeight: 700, color: "#EF4444" }}>{enAttenteCount} régie{enAttenteCount !== 1 ? "s" : ""} sans signature</div><div style={{ fontSize: 11, color: "#6B7280", marginTop: 2 }}>Ouvrir le récapitulatif pour faire signer</div></div>
+            <div><div style={{ fontSize: 13, fontWeight: 700, color: "#E53E3E" }}>{enAttenteCount} régie{enAttenteCount !== 1 ? "s" : ""} sans signature</div><div style={{ fontSize: 11, color: "#666666", marginTop: 2 }}>Ouvrir le récapitulatif pour faire signer</div></div>
           </div>
         )}
         <div style={S.tabRow}>
@@ -877,16 +877,16 @@ export default function App() {
                           {r.initiales && <span style={S.initBadge}>{r.initiales}</span>}
                           {r.photo_url     && <span style={S.photoBadge} onClick={() => setFullscreenUrl(r.photo_url)}>📷 Photo</span>}
                           {r.signature_url && <span style={S.sigBadge}   onClick={() => setFullscreenUrl(r.signature_url)}>✍️ Signé</span>}
-                          <span style={{ fontSize: 11, color: "#4B5563" }}>{formatDate(r.created_at)}</span>
+                          <span style={{ fontSize: 11, color: "#888888" }}>{formatDate(r.created_at)}</span>
                         </div>
                         <button style={S.delSmall} onClick={() => setConfirmDel(r.id)}>🗑</button>
                       </div>
-                      <div style={{ fontSize: 12, color: "#E8EAF0", fontWeight: 600, marginBottom: 2 }}>{r.categorie}</div>
-                      {r.emplacement && <div style={{ fontSize: 11, color: "#6B7280", marginBottom: 4 }}>📍 {r.emplacement}</div>}
-                      {r.demandeur   && <div style={{ fontSize: 11, color: "#4B5563", marginBottom: 4 }}>🙋 {r.demandeur}</div>}
-                      {(lignes.mo || []).slice(0,2).map((l, i) => { const sv = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 11, color: "#9CA3AF" }}>👷 {sv?.label || l.service}{l.quantite ? ` · ${l.quantite} ${sv?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
-                      {(lignes.mo || []).length > 2 && <div style={{ fontSize: 11, color: "#4B5563" }}>+ {lignes.mo.length - 2} service{lignes.mo.length - 2 > 1 ? "s" : ""}</div>}
-                      {(lignes.mat || []).filter(l => l.designation).length > 0 && <div style={{ fontSize: 11, color: "#4B5563", marginTop: 2 }}>📦 {lignes.mat.length} ligne{lignes.mat.length > 1 ? "s" : ""} matériel</div>}
+                      <div style={{ fontSize: 12, color: "#1A1A1A", fontWeight: 600, marginBottom: 2 }}>{r.categorie}</div>
+                      {r.emplacement && <div style={{ fontSize: 11, color: "#666666", marginBottom: 4 }}>📍 {r.emplacement}</div>}
+                      {r.demandeur   && <div style={{ fontSize: 11, color: "#888888", marginBottom: 4 }}>🙋 {r.demandeur}</div>}
+                      {(lignes.mo || []).slice(0,2).map((l, i) => { const sv = SERVICES_MO.find(x => x.id === l.service); return <div key={i} style={{ fontSize: 11, color: "#666666" }}>👷 {sv?.label || l.service}{l.quantite ? ` · ${l.quantite} ${sv?.unite?.toUpperCase() || "H"}` : ""}</div>; })}
+                      {(lignes.mo || []).length > 2 && <div style={{ fontSize: 11, color: "#888888" }}>+ {lignes.mo.length - 2} service{lignes.mo.length - 2 > 1 ? "s" : ""}</div>}
+                      {(lignes.mat || []).filter(l => l.designation).length > 0 && <div style={{ fontSize: 11, color: "#888888", marginTop: 2 }}>📦 {lignes.mat.length} ligne{lignes.mat.length > 1 ? "s" : ""} matériel</div>}
                       <div style={S.statusRow}>
                         {Object.entries(STATUS_COLORS).map(([key, val]) => (
                           <button key={key} style={S.statusBtn(r.status === key, val)} onClick={() => updateStatus(r.id, key)}>{val.label}</button>
@@ -904,8 +904,8 @@ export default function App() {
       </div>
       {confirmDel && (
         <div style={S.overlayBot}><div style={S.modal}>
-          <div style={{ fontSize: 15, fontWeight: 800, color: "#E8EAF0", marginBottom: 8 }}>Supprimer cette régie ?</div>
-          <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 20 }}>Cette action est irréversible.</div>
+          <div style={{ fontSize: 15, fontWeight: 800, color: "#1A1A1A", marginBottom: 8 }}>Supprimer cette régie ?</div>
+          <div style={{ fontSize: 13, color: "#666666", marginBottom: 20 }}>Cette action est irréversible.</div>
           <div style={{ display: "flex", gap: 8 }}>
             <button style={{ ...S.btnDanger, flex: 1, padding: "12px" }} onClick={() => deleteRegie(confirmDel)}>Oui, supprimer</button>
             <button style={{ ...S.btnGhost, flex: 1, padding: "12px" }} onClick={() => setConfirmDel(null)}>Annuler</button>
@@ -914,8 +914,8 @@ export default function App() {
       )}
       {confirmArch && (
         <div style={S.overlayBot}><div style={S.modal}>
-          <div style={{ fontSize: 15, fontWeight: 800, color: "#E8EAF0", marginBottom: 8 }}>Archiver ce chantier ?</div>
-          <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 20 }}>Il disparaîtra du dashboard et sera accessible dans Archives.</div>
+          <div style={{ fontSize: 15, fontWeight: 800, color: "#1A1A1A", marginBottom: 8 }}>Archiver ce chantier ?</div>
+          <div style={{ fontSize: 13, color: "#666666", marginBottom: 20 }}>Il disparaîtra du dashboard et sera accessible dans Archives.</div>
           <div style={{ display: "flex", gap: 8 }}>
             <button style={{ ...S.btnArchive, flex: 1, padding: "12px", borderRadius: 10 }} onClick={() => archiveChantier(confirmArch)}>📦 Archiver</button>
             <button style={{ ...S.btnGhost, flex: 1, padding: "12px" }} onClick={() => setConfirmArch(null)}>Annuler</button>
