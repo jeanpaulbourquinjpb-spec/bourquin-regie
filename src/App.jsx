@@ -77,7 +77,7 @@ const S = {
   app:        { fontFamily: "'DM Sans', sans-serif", background: "#0A0C12", minHeight: "100vh", color: "#E8EAF0", maxWidth: 500, margin: "0 auto" },
   header:     { background: "linear-gradient(135deg,#13162A,#0A0C12)", borderBottom: "1px solid #1E2235", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 },
   logoWrap:   { display: "flex", alignItems: "center", gap: 10 },
-  logoIcon:   { width: 38, height: 38, background: "linear-gradient(135deg,#F59E0B,#EF4444)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 },
+  logoIcon:   { width: 38, height: 38, background: "#ffffff", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 },
   logoTitle:  { fontSize: 13, fontWeight: 800, color: "#E8EAF0" },
   logoSub:    { fontSize: 10, color: "#4B5563", letterSpacing: 1, textTransform: "uppercase", marginTop: 1 },
   body:       { padding: "16px 14px" },
