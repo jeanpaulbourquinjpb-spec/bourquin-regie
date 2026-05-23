@@ -5,7 +5,7 @@ const SUPABASE_URL = "https://tibwhditawfhrxpmsrtp.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpYndoZGl0YXdmaHJ4cG1zcnRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzNDk4OTksImV4cCI6MjA5NDkyNTg5OX0.k9ago70XNq0GlFdFKDjXKoPb8j1a3CZMgEfrwBvar7I";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const APP_NAME = "Bourquin les Électriciens";
+const APP_NAME = "bourquin les électriciens";
 const LOGO_URL = "https://tibwhditawfhrxpmsrtp.supabase.co/storage/v1/object/public/photos-regies/assets/symbole_bourquin_RVB_2.png";
 
 const TECH_EMAILS = [
