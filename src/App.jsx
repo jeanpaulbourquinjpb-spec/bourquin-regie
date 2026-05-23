@@ -210,6 +210,7 @@ async function generateComposite(sigDataUrl, regie, chantier) {
       };
       img.onerror = () => { clearTimeout(timeout); reject(new Error("img_error")); };
       img.src = sigDataUrl;
+      } // end continueCanvas
     } catch(e) { clearTimeout(timeout); reject(e); }
   });
 }
