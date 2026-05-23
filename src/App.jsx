@@ -6,6 +6,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const APP_NAME = "Bourquin les Électriciens";
+const LOGO_URL = "https://tibwhditawfhrxpmsrtp.supabase.co/storage/v1/object/public/photos-regies/assets/symbole_bourquin_RVB_2.png";
 
 const TECH_EMAILS = [
   { id: "JPB", email: "jean-paul@bourquinelectricite.ch" },
@@ -177,7 +178,11 @@ async function generateComposite(sigDataUrl, regie, chantier) {
       ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, H);
       ctx.strokeStyle = "#e5e7eb"; ctx.lineWidth = 1; ctx.strokeRect(15, 15, W-30, H-30);
       ctx.fillStyle = "#13162A"; ctx.fillRect(15, 15, W-30, 56);
-      ctx.fillStyle = "#F59E0B"; ctx.font = "bold 18px Arial"; ctx.fillText("⚡ " + APP_NAME, PAD, 50);
+      const logoImg = new Image(); logoImg.crossOrigin = "anonymous";
+      logoImg.onload = () => { ctx.drawImage(logoImg, PAD, 18, 24, 24); ctx.fillStyle = "#F59E0B"; ctx.font = "bold 18px Arial"; ctx.fillText(APP_NAME, PAD + 32, 50); continueCanvas(); };
+      logoImg.onerror = () => { ctx.fillStyle = "#F59E0B"; ctx.font = "bold 18px Arial"; ctx.fillText("⚡ " + APP_NAME, PAD, 50); continueCanvas(); };
+      logoImg.src = LOGO_URL;
+      function continueCanvas() {
       ctx.fillStyle = "#9ca3af"; ctx.font = "12px Arial"; ctx.fillText("Bon de régie — Plus values", W-280, 50);
       let y = 90;
       for (const row of rows) {
@@ -560,7 +565,7 @@ export default function App() {
   if (isLoading) return (
     <div style={{ ...S.app, display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      <div style={{ textAlign: "center" }}><div style={{ fontSize: 44, marginBottom: 12 }}>⚡</div><div style={{ color: "#F59E0B", fontWeight: 700 }}>Chargement...</div></div>
+      <div style={{ textAlign: "center" }}><img src={LOGO_URL} style={{ width: 60, height: 60, objectFit: "contain", marginBottom: 12 }} alt="logo" /><div style={{ color: "#F59E0B", fontWeight: 700 }}>Chargement...</div></div>
     </div>
   );
 
@@ -809,7 +814,7 @@ export default function App() {
     <div style={S.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
       <div style={S.header}>
-        <div style={S.logoWrap}><div style={S.logoIcon}>⚡</div><div><div style={S.logoTitle}>{APP_NAME}</div><div style={S.logoSub}>Suivi régies</div></div></div>
+        <div style={S.logoWrap}><div style={S.logoIcon}><img src={LOGO_URL} style={{ width: 28, height: 28, objectFit: "contain" }} alt="logo" /></div><div><div style={S.logoTitle}>{APP_NAME}</div><div style={S.logoSub}>Suivi régies</div></div></div>
         <button onClick={loadData} style={S.btnGhost}>↻</button>
       </div>
       <div style={S.body}>
